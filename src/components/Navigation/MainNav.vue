@@ -27,24 +27,29 @@
         </nav>
 
         <div class="flex items-center h-full ml-auto">
-          <ProfileImage v-if="isLoggedIn" data-test="profile-image" />
+          <ProfileImage v-if="isLoggedIn" data-test="ProfileImage" />
           <ActionButton
             v-else
             text="Sign in"
             data-test="login-button"
-            @click="loginUser"
+            @click="LOGIN_USER"
           />
         </div>
       </div>
-      <SubNav v-if="isLoggedIn" />
+      <SubNav v-if="isLoggedIn" data-test="SubNav" />
     </div>
   </header>
 </template>
 
 <script>
+import { mapMutations, mapState } from "vuex";
+
 import ActionButton from "@/components/Shared/ActionButton.vue";
-import ProfileImage from "@/components/Navigation/MainNav.vue";
+import ProfileImage from "@/components/Navigation/ProfileImage.vue";
 import SubNav from "@/components/Navigation/SubNav.vue";
+
+import { LOGIN_USER } from "@/store";
+
 export default {
   name: "MainNav",
   components: { ActionButton, ProfileImage, SubNav },
@@ -58,7 +63,6 @@ export default {
         { text: "Students", url: "/" },
         { text: "Jobs", url: "/jobs/results" },
       ],
-      isLoggedIn: false,
     };
   },
   computed: {
@@ -68,11 +72,20 @@ export default {
         "h-32": this.isLoggedIn,
       };
     },
+    // isLoggedIn() {
+    // return this.$store.state.isLoggedIn;
+    // },
+    ...mapState({
+      isLoggedIn: (state) => state.isLoggedIn,
+    }),
+    // it can also be written as this: ...mapState(["isLoggedIn"])
+    // the same as above: isLoggedIn: "isLoggedIn"
   },
   methods: {
-    loginUser() {
-      this.isLoggedIn = true;
-    },
+    // LOGIN_USER() {
+    //   this.$store.commit(LOGIN_USER);
+    // },
+    ...mapMutations([LOGIN_USER]), //syntax destructure
   },
 };
 </script>
