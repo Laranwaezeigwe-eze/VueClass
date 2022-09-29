@@ -6,7 +6,7 @@
       for everyone
     </h1>
     <h2 class="text-3xl font-weight:400px">
-      Find your next job at Laravel Careers.
+      Find your next job at Potters Careers.
     </h2>
   </section>
 </template>
